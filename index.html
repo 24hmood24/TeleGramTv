@@ -21,7 +21,7 @@
     --text-dim:#8CA3BE;
     --radius:16px;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
+  *{box-sizing:border-box; margin:0; padding:0; max-width:100%;}
   html{scroll-behavior:smooth;}
   body{
     background:
@@ -44,7 +44,7 @@
     display:flex; align-items:center; justify-content:space-between;
     padding:22px 24px; max-width:1120px; margin:0 auto;
   }
-  .brand{ display:flex; align-items:center; gap:10px; font-family:'Cairo'; font-weight:800; font-size:19px; }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:'Cairo'; font-weight:800; font-size:19px; flex-shrink:0; }
   .brand-mark{
     width:34px; height:34px; border-radius:9px;
     background:linear-gradient(135deg, var(--primary), var(--primary-deep));
@@ -76,6 +76,7 @@
   .hero h1{
     font-size:44px; font-weight:900; line-height:1.28; letter-spacing:-0.01em;
     margin-bottom:20px;
+    overflow-wrap:break-word; word-break:break-word;
   }
   .hero h1 span{
     background:linear-gradient(90deg, var(--primary), #6BC5EE);
@@ -254,6 +255,8 @@
     .feat{ padding:18px 14px; }
     .download-card{ padding:26px 18px; }
     .dl-info h2{ font-size:22px; }
+    .hero h1{ font-size:24px; line-height:1.35; }
+    .brand{ font-size:15px; }
   }
   @media (prefers-reduced-motion: reduce){
     .reveal{ transition:none; opacity:1; transform:none; }
