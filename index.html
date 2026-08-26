@@ -22,7 +22,7 @@
     --radius:16px;
   }
   *{box-sizing:border-box; margin:0; padding:0; max-width:100%;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth; overflow-x:hidden; width:100%;}
   body{
     background:
       radial-gradient(1200px 600px at 15% -10%, rgba(34,158,217,0.16), transparent 60%),
@@ -292,6 +292,7 @@
       <a class="btn btn-ghost" href="#features">استعرض المزايا</a>
     </div>
     <div class="version-note" id="versionNote">جاري التحقق من آخر إصدار...</div>
+    <div class="version-note" style="margin-top:6px;">أو افتح تطبيق <b>Downloader</b> على تيفيك واكتب الكود: <b class="mono" style="color:var(--gold); font-size:15px;">6640192</b></div>
   </div>
 
   <div class="tv-stage reveal">
@@ -400,7 +401,7 @@
 </section>
 
 <footer>
-  <div>© 2026 TelegramTV · <a href="https://github.com/24hmood24/TeleGramTv" target="_blank" rel="noopener">المستودع على GitHub</a></div>
+  <div>© 2026 TelegramTV · <a href="https://github.com/24hmood24/TeleGramTv" target="_blank" rel="noopener">المستودع على GitHub</a> · كود Downloader: <b class="mono">6640192</b></div>
   <div class="disclaimer">تطبيق غير رسمي وغير تابع لتيليجرام. يعرض المحتوى المتوفر أصلًا بحساب المستخدم على تيليجرام فقط.</div>
 </footer>
 
@@ -453,6 +454,7 @@
   }, { threshold: 0.15 });
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    window.scrollTo(0, 0);
 </script>
 
 </body>
