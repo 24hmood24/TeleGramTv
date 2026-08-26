@@ -40,6 +40,9 @@
   .mono{ font-family:'IBM Plex Mono', monospace; letter-spacing:0.02em; }
   a{ color:inherit; text-decoration:none; }
   .wrap{ max-width:1120px; margin:0 auto; padding:0 24px; }
+  @media (min-width:900px){
+    .wrap{ padding:0 56px; }
+  }
 
   /* ===== nav ===== */
   nav{
@@ -111,6 +114,7 @@
   .tv-stage{ position:relative; display:flex; justify-content:center; }
   .tv{
     width:100%; max-width:420px;
+    margin:0 auto;
     background:#060B12;
     border-radius:20px;
     padding:14px;
