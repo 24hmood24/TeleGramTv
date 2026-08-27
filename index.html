@@ -41,11 +41,11 @@
   a{ color:inherit; text-decoration:none; }
   .wrap{ max-width:1120px; margin:0 auto; padding:0 24px; }
 
-  /* ===== nav ===== */
   nav{
     display:flex; align-items:center; justify-content:space-between;
     padding:22px 24px; max-width:1120px; margin:0 auto;
   }
+  .nav-actions{ display:flex; align-items:center; gap:10px; }
   .brand{ display:flex; align-items:center; gap:10px; font-family:'Cairo'; font-weight:800; font-size:19px; flex-shrink:0; }
   .brand-mark{
     width:34px; height:34px; border-radius:9px;
@@ -54,16 +54,19 @@
     box-shadow:0 6px 18px rgba(34,158,217,0.35);
   }
   .brand-mark svg{ width:16px; height:16px; }
-  .nav-link{
+  .nav-link, .lang-btn{
     display:flex; align-items:center; gap:8px;
     padding:9px 16px; border-radius:100px;
     border:1px solid var(--line);
     color:var(--text-dim); font-size:14px; font-weight:500;
     transition:all .2s ease;
+    background:transparent; cursor:pointer;
+    font-family:'Tajawal', sans-serif;
   }
-  .nav-link:hover{ color:var(--text); border-color:var(--primary); background:rgba(34,158,217,0.08); }
+  .nav-link:hover, .lang-btn:hover{ color:var(--text); border-color:var(--primary); background:rgba(34,158,217,0.08); }
+  .lang-btn{ font-family:'IBM Plex Mono'; font-size:13px; color:var(--gold); border-color:rgba(255,193,7,0.3); }
+  .lang-btn:hover{ border-color:var(--gold); background:rgba(255,193,7,0.08); color:var(--gold); }
 
-  /* ===== hero ===== */
   .hero{
     padding:56px 0 40px;
     display:grid; grid-template-columns:1.05fr 1fr; gap:56px; align-items:center;
@@ -80,7 +83,7 @@
     margin-bottom:20px;
     overflow-wrap:break-word; word-break:break-word;
   }
-  .hero h1 span{
+  .hero h1 .grad{
     background:linear-gradient(90deg, var(--primary), #6BC5EE);
     -webkit-background-clip:text; background-clip:text; color:transparent;
   }
@@ -91,6 +94,7 @@
     padding:15px 26px; border-radius:12px; font-weight:700; font-size:15px;
     transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
     cursor:pointer; border:none;
+    font-family:'Tajawal', sans-serif;
   }
   .btn-primary{
     background:linear-gradient(135deg, var(--primary), var(--primary-deep));
@@ -103,11 +107,10 @@
   }
   .btn-ghost:hover{ border-color:var(--text-dim); background:rgba(255,255,255,0.03); }
   .btn svg{ width:18px; height:18px; flex-shrink:0; }
-    .nav-link svg{ width:18px; height:18px; flex-shrink:0; }
+  .nav-link svg{ width:18px; height:18px; flex-shrink:0; }
   .version-note{ margin-top:16px; font-size:13px; color:var(--text-dim); font-family:'IBM Plex Mono'; }
   .version-note b{ color:var(--gold); font-weight:600; }
 
-  /* ===== TV mockup (signature element) ===== */
   .tv-stage{ position:relative; display:flex; justify-content:center; }
   .tv{
     width:100%; max-width:420px;
@@ -165,11 +168,9 @@
   }
   .tv-base{ width:170px; height:6px; margin:0 auto; background:#060A10; border-radius:100px; }
 
-  /* ===== reveal on scroll ===== */
   .reveal{ opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
   .reveal.in{ opacity:1; transform:translateY(0); }
 
-  /* ===== features ===== */
   section{ padding:70px 0; }
   .section-head{ text-align:center; max-width:560px; margin:0 auto 44px; }
   .section-head .eyebrow{ margin-bottom:16px; }
@@ -196,7 +197,6 @@
   .feat h3{ font-family:'Cairo'; font-size:15px; font-weight:700; margin-bottom:6px; }
   .feat p{ font-size:13px; color:var(--text-dim); line-height:1.55; }
 
-  /* ===== download ===== */
   .download-card{
     background:linear-gradient(135deg, var(--surface), var(--surface-2));
     border:1px solid var(--line);
@@ -217,7 +217,6 @@
   .dl-meta b{ display:block; color:var(--text); font-size:14px; margin-bottom:2px; font-family:'Cairo'; }
   .dl-action{ position:relative; flex-shrink:0; text-align:center; }
 
-  /* ===== footer ===== */
   footer{
     border-top:1px solid var(--line);
     padding:30px 0; text-align:center;
@@ -237,13 +236,14 @@
     .feat-grid{ grid-template-columns:1fr; }
     .hero h1{ font-size:27px; }
   }
-    @media (max-width:600px){
+  @media (max-width:600px){
     nav{ padding:16px; }
     .wrap{ padding:0 16px; }
     .brand{ font-size:16px; gap:8px; }
     .brand-mark{ width:30px; height:30px; }
     .nav-link{ padding:9px 12px; }
     .nav-link .nav-text{ display:none; }
+    .lang-btn{ padding:9px 12px; }
     .hero{ padding:24px 0 30px; gap:36px; }
     .hero p{ font-size:15px; }
     .eyebrow{ font-size:11px; padding:5px 12px; }
@@ -278,26 +278,29 @@
     </div>
     TelegramTV
   </div>
+  <div class="nav-actions">
+    <button class="lang-btn" id="langToggleBtn" type="button">English</button>
     <a class="nav-link" href="https://github.com/24hmood24/TeleGramTv" target="_blank" rel="noopener">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.5v-1.87c-2.78.62-3.37-1.37-3.37-1.37-.46-1.2-1.11-1.53-1.11-1.53-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .84-.28 2.75 1.05a9.36 9.36 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9v2.82c0 .28.18.61.69.5A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
-    <span class="nav-text">الكود المصدري</span>
-  </a>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.5v-1.87c-2.78.62-3.37-1.37-3.37-1.37-.46-1.2-1.11-1.53-1.11-1.53-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .84-.28 2.75 1.05a9.36 9.36 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9v2.82c0 .28.18.61.69.5A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
+      <span class="nav-text" data-i18n="sourceCode">الكود المصدري</span>
+    </a>
+  </div>
 </nav>
 
 <header class="hero wrap">
   <div class="reveal">
-    <div class="eyebrow"><span class="dot"></span> تطبيق أندرويد تلفزيون</div>
-    <h1>قنواتك على تيليجرام<br><span>تتحول لتلفزيون</span></h1>
-    <p>يعرض ملفات قنوات تيليجرام المفضلة عندك بواجهة مشاهدة أنيقة على شاشة التلفزيون — بترتيب حلقات، صور مصغرة، واستكمال تلقائي، بدون أي سيرفر وسيط بينك وبين تيليجرام.</p>
+    <div class="eyebrow"><span class="dot"></span> <span data-i18n="eyebrowHero">تطبيق أندرويد تلفزيون</span></div>
+    <h1><span data-i18n="heroLine1">قنواتك على تيليجرام</span><br><span class="grad" data-i18n="heroLine2">تتحول لتلفزيون</span></h1>
+    <p data-i18n="heroDesc">يعرض ملفات قنوات تيليجرام المفضلة عندك بواجهة مشاهدة أنيقة على شاشة التلفزيون — بترتيب حلقات، صور مصغرة، واستكمال تلقائي، بدون أي سيرفر وسيط بينك وبين تيليجرام.</p>
     <div class="cta-row">
       <button class="btn btn-primary" id="downloadBtn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14"/></svg>
-        <span id="downloadLabel">تحميل التطبيق</span>
+        <span id="downloadLabel" data-i18n="downloadApp">تحميل التطبيق</span>
       </button>
-      <a class="btn btn-ghost" href="#features">استعرض المزايا</a>
+      <a class="btn btn-ghost" href="#features" data-i18n="exploreFeatures">استعرض المزايا</a>
     </div>
-    <div class="version-note" id="versionNote">جاري التحقق من آخر إصدار...</div>
-    <div class="version-note" style="margin-top:6px;">أو افتح تطبيق <b>Downloader</b> على التلفاز واكتب الكود: <b class="mono" style="color:var(--gold); font-size:15px;">2212207</b></div>
+    <div class="version-note" id="versionNote" data-i18n="checkingVersion">جاري التحقق من آخر إصدار...</div>
+    <div class="version-note" data-i18n-html="downloaderHint" style="margin-top:6px;">أو افتح تطبيق <b>Downloader</b> على التلفاز واكتب الكود: <b class="mono" style="color:var(--gold); font-size:15px;">2212207</b></div>
   </div>
 
   <div class="tv-stage reveal">
@@ -306,12 +309,12 @@
       <div class="tv">
         <div class="tv-screen">
           <div class="tv-tabs">
-            <div class="tv-tab active">الرئيسية</div>
-            <div class="tv-tab">القنوات</div>
-            <div class="tv-tab">★ المفضلة</div>
+            <div class="tv-tab active" data-i18n="tabHome">الرئيسية</div>
+            <div class="tv-tab" data-i18n="tabChannels">القنوات</div>
+            <div class="tv-tab" data-i18n="tabFavorites">★ المفضلة</div>
           </div>
           <div>
-            <div class="tv-row-label" style="margin-bottom:8px;">أكمل من حيث توقفت</div>
+            <div class="tv-row-label" style="margin-bottom:8px;" data-i18n="continueWatching">أكمل من حيث توقفت</div>
             <div class="tv-grid">
               <div class="tv-card"><div class="bar"><i style="width:70%"></i></div></div>
               <div class="tv-card"><div class="bar"><i style="width:35%"></i></div></div>
@@ -319,7 +322,7 @@
             </div>
           </div>
           <div>
-            <div class="tv-row-label" style="margin-bottom:8px;">★ قناتي المفضلة</div>
+            <div class="tv-row-label" style="margin-bottom:8px;" data-i18n="favChannel">★ قناتي المفضلة</div>
             <div class="tv-grid">
               <div class="tv-card"><span class="star">★</span></div>
               <div class="tv-card"><span class="star">★</span></div>
@@ -336,51 +339,51 @@
 
 <section id="features" class="wrap">
   <div class="section-head reveal">
-    <div class="eyebrow"><span class="dot"></span> المزايا</div>
-    <h2>كل شي تحتاجه لتجربة مشاهدة مريحة</h2>
-    <p>مبني خصيصًا للتحكم بالريموت، من الألف للياء.</p>
+    <div class="eyebrow"><span class="dot"></span> <span data-i18n="eyebrowFeatures">المزايا</span></div>
+    <h2 data-i18n="featuresTitle">كل شي تحتاجه لتجربة مشاهدة مريحة</h2>
+    <p data-i18n="featuresSubtitle">مبني خصيصًا للتحكم بالريموت، من الألف للياء.</p>
   </div>
 
   <div class="feat-grid">
     <div class="feat reveal">
       <div class="feat-icon">📡</div>
-      <h3>تشغيل مباشر</h3>
-      <p>يتصل بحسابك على تيليجرام مباشرة، بدون أي سيرفر وسيط يمر عبره المحتوى.</p>
+      <h3 data-i18n="feat1Title">تشغيل مباشر</h3>
+      <p data-i18n="feat1Desc">يتصل بحسابك على تيليجرام مباشرة، بدون أي سيرفر وسيط يمر عبره المحتوى.</p>
     </div>
     <div class="feat reveal">
       <div class="feat-icon">🗂️</div>
-      <h3>واجهة شبكية أنيقة</h3>
-      <p>حلقاتك مرتبة بصور مصغرة ومدة كل ملف، بتصميم مبني للتصفح بالريموت.</p>
+      <h3 data-i18n="feat2Title">واجهة شبكية أنيقة</h3>
+      <p data-i18n="feat2Desc">حلقاتك مرتبة بصور مصغرة ومدة كل ملف، بتصميم مبني للتصفح بالريموت.</p>
     </div>
     <div class="feat reveal">
       <div class="feat-icon">⭐</div>
-      <h3>مفضلة قابلة للترتيب</h3>
-      <p>ثبّت قنواتك المفضلة، ورتّبها باللي تحبه بضغطة مطولة وأزرار الريموت.</p>
+      <h3 data-i18n="feat3Title">مفضلة قابلة للترتيب</h3>
+      <p data-i18n="feat3Desc">ثبّت قنواتك المفضلة، ورتّبها باللي تحبه بضغطة مطولة وأزرار الريموت.</p>
     </div>
     <div class="feat reveal">
       <div class="feat-icon">⏱️</div>
-      <h3>استكمال تلقائي</h3>
-      <p>يحفظ مكان توقفك بكل حلقة، ويسألك تكمل أو تبدأ من جديد.</p>
+      <h3 data-i18n="feat4Title">استكمال تلقائي</h3>
+      <p data-i18n="feat4Desc">يحفظ مكان توقفك بكل حلقة، ويسألك تكمل أو تبدأ من جديد.</p>
     </div>
     <div class="feat reveal">
       <div class="feat-icon">👥</div>
-      <h3>أكثر من حساب</h3>
-      <p>بدّل بين أكثر من حساب تيليجرام على نفس الجهاز بضغطة وحدة.</p>
+      <h3 data-i18n="feat5Title">أكثر من حساب</h3>
+      <p data-i18n="feat5Desc">بدّل بين أكثر من حساب تيليجرام على نفس الجهاز بضغطة وحدة.</p>
     </div>
     <div class="feat reveal">
       <div class="feat-icon">🔒</div>
-      <h3>قفل برمز سري</h3>
-      <p>احمِ التطبيق برمز مكوّن من 4 أرقام خاص بكل حساب.</p>
+      <h3 data-i18n="feat6Title">قفل برمز سري</h3>
+      <p data-i18n="feat6Desc">احمِ التطبيق برمز مكوّن من 4 أرقام خاص بكل حساب.</p>
     </div>
     <div class="feat reveal">
       <div class="feat-icon">⌨️</div>
-      <h3>كيبورد مخصص للريموت</h3>
-      <p>لوحة مفاتيح عربية وإنجليزية مبنية بالتطبيق، تشتغل حتى بدون كيبورد نظام.</p>
+      <h3 data-i18n="feat7Title">كيبورد مخصص للريموت</h3>
+      <p data-i18n="feat7Desc">لوحة مفاتيح عربية وإنجليزية مبنية بالتطبيق، تشتغل حتى بدون كيبورد نظام.</p>
     </div>
     <div class="feat reveal">
       <div class="feat-icon">🔄</div>
-      <h3>تحديثات من داخل التطبيق</h3>
-      <p>يتحقق من وجود إصدار أحدث وينزّله ويثبّته بدون ما تطلع من الشاشة.</p>
+      <h3 data-i18n="feat8Title">تحديثات من داخل التطبيق</h3>
+      <p data-i18n="feat8Desc">يتحقق من وجود إصدار أحدث وينزّله ويثبّته بدون ما تطلع من الشاشة.</p>
     </div>
   </div>
 </section>
@@ -388,36 +391,132 @@
 <section class="wrap">
   <div class="download-card reveal">
     <div class="dl-info">
-      <h2>جاهز تجربه؟</h2>
-      <p>نزّل آخر إصدار مباشرة، وثبّته على جهاز أندرويد تلفزيون حقك.</p>
+      <h2 data-i18n="readyTitle">جاهز تجربه؟</h2>
+      <p data-i18n="readyDesc">نزّل آخر إصدار مباشرة، وثبّته على جهاز أندرويد تلفزيون حقك.</p>
       <div class="dl-meta">
-        <div><b id="metaVersion">—</b>الإصدار</div>
-        <div><b>Android TV</b>المنصّة</div>
-        <div><b>APK</b>صيغة الملف</div>
+        <div><b id="metaVersion">—</b><span data-i18n="metaVersionLabel">الإصدار</span></div>
+        <div><b>Android TV</b><span data-i18n="metaPlatformLabel">المنصّة</span></div>
+        <div><b>APK</b><span data-i18n="metaFormatLabel">صيغة الملف</span></div>
       </div>
     </div>
     <div class="dl-action">
       <button class="btn btn-primary" id="downloadBtn2" style="font-size:16px; padding:18px 34px;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14"/></svg>
-        تحميل APK
+        <span data-i18n="downloadApk">تحميل APK</span>
       </button>
     </div>
   </div>
 </section>
 
 <footer>
-  <div>© 2026 TelegramTV · <a href="https://github.com/24hmood24/TeleGramTv" target="_blank" rel="noopener">المستودع على GitHub</a> · كود Downloader: <b class="mono">2212207</b></div>
-  <div class="disclaimer">تطبيق غير رسمي وغير تابع لتيليجرام. يعرض المحتوى المتوفر أصلًا بحساب المستخدم على تيليجرام فقط.</div>
+  <div data-i18n-html="footerLine">© 2026 TelegramTV · <a href="https://github.com/24hmood24/TeleGramTv" target="_blank" rel="noopener">المستودع على GitHub</a> · كود Downloader: <b class="mono">2212207</b></div>
+  <div class="disclaimer" data-i18n="disclaimer">تطبيق غير رسمي وغير تابع لتيليجرام. يعرض المحتوى المتوفر أصلًا بحساب المستخدم على تيليجرام فقط.</div>
 </footer>
 
 <script>
-  // ===== تحقق من آخر إصدار من GitHub مباشرة (بدون أي سيرفر) =====
+  const translations = {
+    pageTitle: { ar: "TelegramTV — شغّل قنواتك على شاشة التلفزيون", en: "TelegramTV — Watch your channels on the big screen" },
+    metaDescription: { ar: "تطبيق أندرويد تلفزيون يعرض ملفات قنوات تيليجرام المفضلة كواجهة مشاهدة أنيقة، بدون أي سيرفر وسيط.", en: "An Android TV app that displays your favorite Telegram channels as a clean viewing interface, with no middle server." },
+    sourceCode: { ar: "الكود المصدري", en: "Source Code" },
+    eyebrowHero: { ar: "تطبيق أندرويد تلفزيون", en: "Android TV App" },
+    heroLine1: { ar: "قنواتك على تيليجرام", en: "Your Telegram channels" },
+    heroLine2: { ar: "تتحول لتلفزيون", en: "become a TV experience" },
+    heroDesc: { ar: "يعرض ملفات قنوات تيليجرام المفضلة عندك بواجهة مشاهدة أنيقة على شاشة التلفزيون — بترتيب حلقات، صور مصغرة، واستكمال تلقائي، بدون أي سيرفر وسيط بينك وبين تيليجرام.", en: "Displays your favorite Telegram channels' media in a clean TV-style browsing interface — organized episodes, thumbnails, and auto-resume, with no middle server between you and Telegram." },
+    downloadApp: { ar: "تحميل التطبيق", en: "Download App" },
+    exploreFeatures: { ar: "استعرض المزايا", en: "Explore Features" },
+    checkingVersion: { ar: "جاري التحقق من آخر إصدار...", en: "Checking latest version..." },
+    downloaderHint: {
+      ar: 'أو افتح تطبيق <b>Downloader</b> على التلفاز واكتب الكود: <b class="mono" style="color:var(--gold); font-size:15px;">2212207</b>',
+      en: 'Or open the <b>Downloader</b> app on your TV and enter code: <b class="mono" style="color:var(--gold); font-size:15px;">2212207</b>'
+    },
+    tabHome: { ar: "الرئيسية", en: "Home" },
+    tabChannels: { ar: "القنوات", en: "Channels" },
+    tabFavorites: { ar: "★ المفضلة", en: "★ Favorites" },
+    continueWatching: { ar: "أكمل من حيث توقفت", en: "Continue Watching" },
+    favChannel: { ar: "★ قناتي المفضلة", en: "★ My Favorite Channel" },
+    eyebrowFeatures: { ar: "المزايا", en: "Features" },
+    featuresTitle: { ar: "كل شي تحتاجه لتجربة مشاهدة مريحة", en: "Everything you need for a smooth viewing experience" },
+    featuresSubtitle: { ar: "مبني خصيصًا للتحكم بالريموت، من الألف للياء.", en: "Built from the ground up for remote-control navigation." },
+    feat1Title: { ar: "تشغيل مباشر", en: "Direct playback" },
+    feat1Desc: { ar: "يتصل بحسابك على تيليجرام مباشرة، بدون أي سيرفر وسيط يمر عبره المحتوى.", en: "Connects directly to your Telegram account — no middle server the content passes through." },
+    feat2Title: { ar: "واجهة شبكية أنيقة", en: "Clean grid interface" },
+    feat2Desc: { ar: "حلقاتك مرتبة بصور مصغرة ومدة كل ملف، بتصميم مبني للتصفح بالريموت.", en: "Your episodes organized with thumbnails and durations, designed for remote-friendly browsing." },
+    feat3Title: { ar: "مفضلة قابلة للترتيب", en: "Reorderable favorites" },
+    feat3Desc: { ar: "ثبّت قنواتك المفضلة، ورتّبها باللي تحبه بضغطة مطولة وأزرار الريموت.", en: "Pin your favorite channels and reorder them exactly how you like with a long-press and the remote." },
+    feat4Title: { ar: "استكمال تلقائي", en: "Auto-resume" },
+    feat4Desc: { ar: "يحفظ مكان توقفك بكل حلقة، ويسألك تكمل أو تبدأ من جديد.", en: "Remembers where you stopped in every episode, and asks whether to resume or start over." },
+    feat5Title: { ar: "أكثر من حساب", en: "Multiple accounts" },
+    feat5Desc: { ar: "بدّل بين أكثر من حساب تيليجرام على نفس الجهاز بضغطة وحدة.", en: "Switch between multiple Telegram accounts on the same device in one tap." },
+    feat6Title: { ar: "قفل برمز سري", en: "PIN lock" },
+    feat6Desc: { ar: "احمِ التطبيق برمز مكوّن من 4 أرقام خاص بكل حساب.", en: "Protect the app with a 4-digit PIN, unique to each account." },
+    feat7Title: { ar: "كيبورد مخصص للريموت", en: "Built-in remote keyboard" },
+    feat7Desc: { ar: "لوحة مفاتيح عربية وإنجليزية مبنية بالتطبيق، تشتغل حتى بدون كيبورد نظام.", en: "Arabic and English on-screen keyboard built into the app — works even without a system keyboard." },
+    feat8Title: { ar: "تحديثات من داخل التطبيق", en: "In-app updates" },
+    feat8Desc: { ar: "يتحقق من وجود إصدار أحدث وينزّله ويثبّته بدون ما تطلع من الشاشة.", en: "Checks for newer versions, downloads and installs them without leaving the screen." },
+    readyTitle: { ar: "جاهز تجربه؟", en: "Ready to try it?" },
+    readyDesc: { ar: "نزّل آخر إصدار مباشرة، وثبّته على جهاز أندرويد تلفزيون حقك.", en: "Download the latest release directly and install it on your Android TV device." },
+    metaVersionLabel: { ar: "الإصدار", en: "Version" },
+    metaPlatformLabel: { ar: "المنصّة", en: "Platform" },
+    metaFormatLabel: { ar: "صيغة الملف", en: "File format" },
+    downloadApk: { ar: "تحميل APK", en: "Download APK" },
+    footerLine: {
+      ar: '© 2026 TelegramTV · <a href="https://github.com/24hmood24/TeleGramTv" target="_blank" rel="noopener">المستودع على GitHub</a> · كود Downloader: <b class="mono">2212207</b>',
+      en: '© 2026 TelegramTV · <a href="https://github.com/24hmood24/TeleGramTv" target="_blank" rel="noopener">GitHub Repository</a> · Downloader code: <b class="mono">2212207</b>'
+    },
+    disclaimer: { ar: "تطبيق غير رسمي وغير تابع لتيليجرام. يعرض المحتوى المتوفر أصلًا بحساب المستخدم على تيليجرام فقط.", en: "Unofficial app, not affiliated with Telegram. It only displays content already available in the user's own account." },
+    latestVersionPrefix: { ar: "آخر إصدار", en: "Latest version" },
+    clickToReleases: { ar: "اضغط للانتقال لصفحة الإصدارات", en: "Click to go to the releases page" }
+  };
+
+  let currentLang = localStorage.getItem('tv_lang') || 'ar';
+  let cachedVersion = null;
+  let cachedSizeMB = null;
+  let hasVersionError = false;
+
+  function applyLanguage(lang){
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (translations[key]) el.textContent = translations[key][lang];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const key = el.getAttribute('data-i18n-html');
+      if (translations[key]) el.innerHTML = translations[key][lang];
+    });
+
+    document.title = translations.pageTitle[lang];
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute('content', translations.metaDescription[lang]);
+
+    document.getElementById('langToggleBtn').textContent = lang === 'ar' ? 'English' : 'العربية';
+    localStorage.setItem('tv_lang', lang);
+
+    renderVersionNote();
+  }
+
+  function renderVersionNote(){
+    const noteEl = document.getElementById('versionNote');
+    if (hasVersionError) {
+      noteEl.textContent = translations.clickToReleases[currentLang];
+      return;
+    }
+    if (cachedVersion) {
+      const sizePart = cachedSizeMB ? ' · ' + cachedSizeMB + ' MB' : '';
+      noteEl.innerHTML = `${translations.latestVersionPrefix[currentLang]}: <b>${cachedVersion}</b>${sizePart}`;
+    }
+  }
+
+  document.getElementById('langToggleBtn').addEventListener('click', () => {
+    applyLanguage(currentLang === 'ar' ? 'en' : 'ar');
+  });
+
   const REPO = '24hmood24/TeleGramTv';
   const FALLBACK_URL = `https://github.com/${REPO}/releases/latest`;
 
   async function loadLatestRelease(){
-    const labelEl = document.getElementById('downloadLabel');
-    const noteEl = document.getElementById('versionNote');
     const metaEl = document.getElementById('metaVersion');
     const btn1 = document.getElementById('downloadBtn');
     const btn2 = document.getElementById('downloadBtn2');
@@ -431,8 +530,10 @@
       const sizeMB = asset ? (asset.size / (1024*1024)).toFixed(1) : null;
 
       if(version){
-        noteEl.innerHTML = `آخر إصدار: <b>${version}</b>${sizeMB ? ' · ' + sizeMB + ' ميجا' : ''}`;
+        cachedVersion = version;
+        cachedSizeMB = sizeMB;
         metaEl.textContent = version;
+        renderVersionNote();
       }
 
       const targetUrl = asset ? asset.browser_download_url : FALLBACK_URL;
@@ -440,15 +541,17 @@
         btn.onclick = () => window.location.href = targetUrl;
       });
     }catch(e){
-      noteEl.textContent = 'اضغط للانتقال لصفحة الإصدارات';
+      hasVersionError = true;
+      renderVersionNote();
       [btn1, btn2].forEach(btn => {
         btn.onclick = () => window.location.href = FALLBACK_URL;
       });
     }
   }
+
+  applyLanguage(currentLang);
   loadLatestRelease();
 
-  // ===== ظهور تدريجي عند التمرير =====
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if(entry.isIntersecting){
@@ -459,7 +562,7 @@
   }, { threshold: 0.15 });
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    window.scrollTo(0, 0);
+  window.scrollTo(0, 0);
 </script>
 
 </body>
