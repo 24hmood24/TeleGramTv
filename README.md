@@ -69,8 +69,7 @@ For personal use. No commercial distribution license is currently available.
 - ⌨️ **كيبورد مخصص للريموت** — لوحة مفاتيح عربية/إنجليزية مبنية بالتطبيق نفسه
 - 🔄 **تحديثات من داخل التطبيق** — يتحقق من وجود إصدار أحدث وينزّله ويثبّته تلقائيًا
 
-| _(أضف صورة هنا)_ | _(أضف صورة هنا)_ | _(أضف صورة هنا)_ |
-|---|---|---|
+| _(screenshots/screen1.png)_ | _(screenshots/screen2.png)_ | _(screenshots/screen3.png)_ ||---|---|---|
 
 ## التثبيت
 
