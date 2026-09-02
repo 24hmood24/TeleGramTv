@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TelegramTV — شغّل قنواتك على شاشة التلفزيون</title>
-<link rel="icon" type="image/webp" href="ic_launcher.webp">
+<link rel="icon" type="image/webp" href="ic_launcher.png">
 <link rel="icon" type="image/png" href="ic_launcher.png">
 <link rel="shortcut icon" href="ic_launcher.png">
-<link rel="apple-touch-icon" href="ic_launcher.webp">
+<link rel="apple-touch-icon" href="ic_launcher.png">
 <meta name="description" content="تطبيق أندرويد تلفزيون يعرض ملفات قنوات تيليجرام المفضلة كواجهة مشاهدة أنيقة، بدون أي سيرفر وسيط.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,7 +37,25 @@
     line-height:1.6;
     min-height:100vh;
     overflow-x:hidden;
+    position:relative;
   }
+
+  .scroll-progress{
+    position:fixed; top:0; right:0; left:0; height:3px; z-index:999;
+    background:linear-gradient(90deg, var(--primary), var(--gold));
+    transform-origin:right;
+    transform:scaleX(0);
+    box-shadow:0 0 12px rgba(34,158,217,0.6);
+  }
+
+  .orb{
+    position:fixed; border-radius:50%; filter:blur(60px); pointer-events:none; z-index:0;
+  }
+  .orb-1{ width:340px; height:340px; top:-80px; right:5%; background:rgba(34,158,217,0.14); animation:orbDrift1 16s ease-in-out infinite; }
+  .orb-2{ width:280px; height:280px; bottom:5%; left:-60px; background:rgba(255,193,7,0.10); animation:orbDrift2 20s ease-in-out infinite; }
+  .orb-3{ width:220px; height:220px; top:40%; left:45%; background:rgba(34,158,217,0.08); animation:orbDrift3 24s ease-in-out infinite; }
+
+  nav, header, section, footer{ position:relative; z-index:1; }
   h1,h2,h3,.display{ font-family:'Cairo', sans-serif; }
   .mono{ font-family:'IBM Plex Mono', monospace; letter-spacing:0.02em; }
   a{ color:inherit; text-decoration:none; }
@@ -46,6 +64,7 @@
   nav{
     display:flex; align-items:center; justify-content:space-between;
     padding:22px 24px; max-width:1120px; margin:0 auto;
+    animation:navIn .7s cubic-bezier(.2,.8,.2,1) both;
   }
   .nav-actions{ display:flex; align-items:center; gap:10px; }
   .brand{ display:flex; align-items:center; gap:10px; font-family:'Cairo'; font-weight:800; font-size:19px; flex-shrink:0; }
@@ -64,7 +83,14 @@
     transition:all .2s ease;
     background:transparent; cursor:pointer;
     font-family:'Tajawal', sans-serif;
+    position:relative; overflow:hidden;
   }
+  .nav-link::before{
+    content:''; position:absolute; inset:0; border-radius:100px;
+    background:radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(34,158,217,0.25), transparent 60%);
+    opacity:0; transition:opacity .3s ease;
+  }
+  .nav-link:hover::before{ opacity:1; }
   .nav-link:hover, .lang-btn:hover{ color:var(--text); border-color:var(--primary); background:rgba(34,158,217,0.08); }
   .lang-btn{ font-family:'IBM Plex Mono'; font-size:13px; color:var(--gold); border-color:rgba(255,193,7,0.3); }
   .lang-btn:hover{ border-color:var(--gold); background:rgba(255,193,7,0.08); color:var(--gold); }
@@ -79,15 +105,17 @@
     background:rgba(255,193,7,0.1); border:1px solid rgba(255,193,7,0.25);
     padding:6px 14px; border-radius:100px; margin-bottom:22px;
   }
-  .eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--gold); }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--gold); animation:dotPulse 2s ease-in-out infinite; }
   .hero h1{
     font-size:44px; font-weight:900; line-height:1.28; letter-spacing:-0.01em;
     margin-bottom:20px;
     overflow-wrap:break-word; word-break:break-word;
   }
   .hero h1 .grad{
-    background:linear-gradient(90deg, var(--primary), #6BC5EE);
+    background:linear-gradient(90deg, var(--primary), #6BC5EE, var(--gold), var(--primary));
+    background-size:300% 100%;
     -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation:gradShift 6s ease-in-out infinite;
   }
   .hero p{ font-size:17px; color:var(--text-dim); max-width:520px; margin-bottom:34px; }
   .cta-row{ display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
@@ -101,9 +129,11 @@
   .btn-primary{
     background:linear-gradient(135deg, var(--primary), var(--primary-deep));
     color:#fff; box-shadow:0 10px 28px rgba(34,158,217,0.35);
+    animation:ctaPulse 2.6s ease-in-out infinite;
   }
-  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 14px 34px rgba(34,158,217,0.45); }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 14px 34px rgba(34,158,217,0.45); animation-play-state:paused; }
   .btn-primary:active{ transform:translateY(0); }
+  .btn-primary svg{ animation:arrowBounce 1.8s ease-in-out infinite; }
   .btn-ghost{
     background:transparent; color:var(--text); border:1px solid var(--line);
   }
@@ -113,7 +143,7 @@
   .version-note{ margin-top:16px; font-size:13px; color:var(--text-dim); font-family:'IBM Plex Mono'; }
   .version-note b{ color:var(--gold); font-weight:600; }
 
-  .tv-stage{ position:relative; display:flex; justify-content:center; }
+  .tv-stage{ position:relative; display:flex; justify-content:center; perspective:900px; }
   .tv{
     width:100%; max-width:420px;
     margin:0 auto;
@@ -122,7 +152,10 @@
     padding:14px;
     box-shadow:0 30px 70px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.04) inset;
     position:relative;
+    transition:transform .15s ease-out;
+    will-change:transform;
   }
+  .tv-float{ animation:floatTV 6s ease-in-out infinite; }
   .tv-screen{
     background:linear-gradient(160deg, #0E1B2E, #0A1420);
     border-radius:10px;
@@ -150,9 +183,18 @@
     content:''; position:absolute; inset:0;
     background:linear-gradient(160deg, rgba(34,158,217,0.18), transparent 60%);
   }
+  .tv-card::before{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(110deg, transparent 40%, rgba(255,255,255,.09) 50%, transparent 60%);
+    background-size:200% 100%;
+    animation:shimmer 3.2s linear infinite;
+  }
   .tv-card .star{
     position:absolute; top:5px; left:5px; font-size:9px; color:var(--gold);
+    animation:twinkle 2.4s ease-in-out infinite;
   }
+  .tv-card:nth-child(2) .star{ animation-delay:.4s; }
+  .tv-card:nth-child(3) .star{ animation-delay:.8s; }
   .tv-card .bar{
     position:absolute; bottom:0; right:0; left:0; height:3px;
     background:rgba(255,255,255,0.08);
@@ -162,6 +204,7 @@
     position:absolute; inset:-40px; z-index:-1;
     background:radial-gradient(circle at 50% 40%, rgba(34,158,217,0.25), transparent 65%);
     filter:blur(20px);
+    animation:glowPulse 4s ease-in-out infinite;
   }
   .tv-stand{
     width:120px; height:14px; margin:0 auto; margin-top:-2px;
@@ -190,6 +233,14 @@
     transition:border-color .2s ease, transform .2s ease, background .2s ease;
   }
   .feat:hover{ border-color:var(--primary); transform:translateY(-3px); background:var(--surface-2); }
+  .feat-grid .feat:nth-child(1){ transition-delay:.05s; }
+  .feat-grid .feat:nth-child(2){ transition-delay:.1s; }
+  .feat-grid .feat:nth-child(3){ transition-delay:.15s; }
+  .feat-grid .feat:nth-child(4){ transition-delay:.2s; }
+  .feat-grid .feat:nth-child(5){ transition-delay:.25s; }
+  .feat-grid .feat:nth-child(6){ transition-delay:.3s; }
+  .feat-grid .feat:nth-child(7){ transition-delay:.35s; }
+  .feat-grid .feat:nth-child(8){ transition-delay:.4s; }
   .feat-icon{
     width:38px; height:38px; border-radius:10px;
     background:rgba(34,158,217,0.12);
@@ -265,18 +316,89 @@
     .brand{ font-size:15px; }
     .hero > .reveal:first-child{ padding-right:20px; }
   }
+  @keyframes dotPulse{
+    0%, 100%{ opacity:1; box-shadow:0 0 0 0 rgba(255,193,7,0.5); }
+    50%{ opacity:0.5; box-shadow:0 0 0 4px rgba(255,193,7,0); }
+  }
+  @keyframes navIn{
+    from{ opacity:0; transform:translateY(-14px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  @keyframes floatTV{
+    0%, 100%{ transform:translateY(0); }
+    50%{ transform:translateY(-10px); }
+  }
+  @keyframes shimmer{
+    0%{ background-position:200% 0; }
+    100%{ background-position:-200% 0; }
+  }
+  @keyframes glowPulse{
+    0%, 100%{ opacity:0.7; transform:scale(1); }
+    50%{ opacity:1; transform:scale(1.08); }
+  }
+  @keyframes ctaPulse{
+    0%, 100%{ box-shadow:0 10px 28px rgba(34,158,217,0.35); }
+    50%{ box-shadow:0 10px 28px rgba(34,158,217,0.6); }
+  }
+  @keyframes arrowBounce{
+    0%, 100%{ transform:translateY(0); }
+    50%{ transform:translateY(3px); }
+  }
+  @keyframes gradShift{
+    0%, 100%{ background-position:0% 50%; }
+    50%{ background-position:100% 50%; }
+  }
+  @keyframes twinkle{
+    0%, 100%{ opacity:1; transform:scale(1); }
+    50%{ opacity:.35; transform:scale(0.75); }
+  }
+  @keyframes orbDrift1{
+    0%, 100%{ transform:translate(0,0); }
+    50%{ transform:translate(-40px, 50px); }
+  }
+  @keyframes orbDrift2{
+    0%, 100%{ transform:translate(0,0); }
+    50%{ transform:translate(50px, -40px); }
+  }
+  @keyframes orbDrift3{
+    0%, 100%{ transform:translate(0,0) scale(1); }
+    50%{ transform:translate(-30px, -30px) scale(1.15); }
+  }
+  @keyframes rippleFx{
+    from{ transform:scale(0); opacity:.5; }
+    to{ transform:scale(2.6); opacity:0; }
+  }
+
+  .btn{ position:relative; overflow:hidden; }
+  .btn .ripple{
+    position:absolute; border-radius:50%; background:rgba(255,255,255,0.5);
+    width:16px; height:16px; margin:-8px 0 0 -8px; pointer-events:none;
+    animation:rippleFx .6s ease-out forwards;
+  }
+
   @media (prefers-reduced-motion: reduce){
     .reveal{ transition:none; opacity:1; transform:none; }
     html{ scroll-behavior:auto; }
+    *, *::before, *::after{
+      animation-duration:0.01ms !important;
+      animation-iteration-count:1 !important;
+      transition-delay:0s !important;
+    }
+    .orb{ display:none; }
   }
 </style>
 </head>
 <body>
 
+<div class="scroll-progress" id="scrollProgress"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
 <nav>
   <div class="brand">
     <div class="brand-mark" style="background:none; box-shadow:none; padding:0;">
-      <img src="ic_launcher.webp" alt="TelegramTV" style="width:34px; height:34px; border-radius:9px;">
+      <img src="ic_launcher.png" alt="TelegramTV" style="width:34px; height:34px; border-radius:9px;">
     </div>
     TelegramTV
   </div>
@@ -307,7 +429,7 @@
 
   <div class="tv-stage reveal">
     <div class="tv-glow"></div>
-    <div style="width:100%;">
+    <div style="width:100%;" class="tv-float">
       <div class="tv">
         <div class="tv-screen">
           <div class="tv-tabs">
@@ -565,6 +687,62 @@
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   window.scrollTo(0, 0);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // شريط تقدّم التمرير أعلى الصفحة
+  const scrollProgressEl = document.getElementById('scrollProgress');
+  function updateScrollProgress(){
+    const h = document.documentElement;
+    const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight || 1);
+    scrollProgressEl.style.transform = `scaleX(${Math.min(1, Math.max(0, scrolled))})`;
+  }
+  document.addEventListener('scroll', updateScrollProgress, { passive: true });
+  updateScrollProgress();
+
+  // ميلان بسيط ثلاثي الأبعاد لشكل التلفزيون حسب حركة الماوس
+  if (!prefersReducedMotion && window.matchMedia('(pointer:fine)').matches) {
+    const stage = document.querySelector('.tv-stage');
+    const tvEl = document.querySelector('.tv');
+    if (stage && tvEl) {
+      stage.addEventListener('mousemove', (e) => {
+        const rect = stage.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width - 0.5;
+        const py = (e.clientY - rect.top) / rect.height - 0.5;
+        tvEl.style.transform = `rotateY(${px * 10}deg) rotateX(${py * -10}deg)`;
+      });
+      stage.addEventListener('mouseleave', () => {
+        tvEl.style.transform = 'rotateY(0) rotateX(0)';
+      });
+    }
+  }
+
+  // إحداثيات الماوس فوق روابط التنقّل (لتوهج نقطة التمرير)
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('mousemove', (e) => {
+      const r = link.getBoundingClientRect();
+      link.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      link.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+    });
+  });
+
+  // تأثير ripple عند الضغط على الأزرار
+  document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const r = btn.getBoundingClientRect();
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      ripple.style.left = (e.clientX - r.left) + 'px';
+      ripple.style.top = (e.clientY - r.top) + 'px';
+      btn.appendChild(ripple);
+      ripple.addEventListener('animationend', () => ripple.remove());
+    });
+  });
+</script>
+
+<!-- mojibo Chat Widget -->
+<script src="https://dojara.com/mojib/widget.js?tenant=dojara"
+  async>
 </script>
 
 </body>
