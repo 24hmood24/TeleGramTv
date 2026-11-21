@@ -84,6 +84,15 @@ For personal use. No commercial distribution license is currently available.
 - جهاز يعمل بنظام Android TV (API 28 فأعلى)
 - حساب تيليجرام نشط
 
+## 🌐 صفحة التطبيق والأدلة
+
+- **صفحة التطبيق والتحميل:** [dojara.com/telegramtv](https://dojara.com/telegramtv)
+- [كيف تشاهد قنوات تيليجرام على التلفزيون (أندرويد TV)](https://dojara.com/guide/telegram-on-tv)
+- [قنوات تلفزيون مباشر مجانية على أندرويد TV والكمبيوتر](https://dojara.com/guide/free-live-tv)
+- [كيف تثبّت تطبيقات على تلفزيون أندرويد بتطبيق Downloader (مع الأكواد)](https://dojara.com/guide/downloader-codes)
+
+من منتجات [دجارا (Dojara)](https://dojara.com/)
+
 ## التقنيات المستخدمة
 
 - **Kotlin** + **Jetpack Compose for TV** (androidx.tv.material3)
